@@ -1,0 +1,8 @@
+for i in {1..6}; do sbatch -n1 -o /$PWD/testJob.out_${i} ./testjob.sh ; done
+sinfo
+scancel
+squeue
+
+yodamerge -o mymerged.yoda *.yoda
+
+Pozor vysledky z runu 13000 dat do jine slozky.

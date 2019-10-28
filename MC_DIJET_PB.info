@@ -1,0 +1,14 @@
+Name: MC_DIJET_PB
+Summary: Monte Carlo validation observables dijet production
+Status: VALIDATED
+Authors:
+ - Petr Baron <petr.baron@cern.ch>
+References:
+RunInfo:
+  Analysis to separate quark and gluon jets.
+NumEvents: 1000000
+PtCuts: [0]
+Description:
+  Analysis to separate quark and gluon jets.
+NeedCrossSection: yes
+
