@@ -301,6 +301,9 @@ namespace Rivet {
 
         size_t k = 0;
         foreach (const Jet& jet_test, jetAr[i]) {
+        if (jet_test.containsPID(9922212)){
+          continue;
+        }
         if (k==0){
                 LeadingJet = jet_test;
                 }
