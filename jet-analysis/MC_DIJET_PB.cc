@@ -406,11 +406,11 @@ namespace Rivet {
      }
 
     void finalize() {
-      divide(_histGluonFractionPt , _histPartonFractionPt);
-      divide(_histQuarkFractionPt , _histPartonFractionPt);
-      divide(_histGluonAndQuarkFractionPt , _histPartonFractionPt);
-      divide(_histOthersThenGluonAndQuarkFractionPt , _histPartonFractionPt);
-      divide(_histPartonFractionPt , _histPartonFractionPt);
+      //divide(_histGluonFractionPt , _histPartonFractionPt); ask !!!
+      //divide(_histQuarkFractionPt , _histPartonFractionPt);
+      //divide(_histGluonAndQuarkFractionPt , _histPartonFractionPt);
+      //divide(_histOthersThenGluonAndQuarkFractionPt , _histPartonFractionPt);
+      //divide(_histPartonFractionPt , _histPartonFractionPt);
       normalize({_histGluonMulti, _histQuarkMulti, _histGluonAndQuarkMulti, _histOthersThenGluonAndQuarkMulti, _histPartonMulti});
       normalize({_histFastJets02MultLam,_histFastJets02PtLam,_histFastJets02LhaLam,_histFastJets02WidthLam,_histFastJets02MassLam,_histFastJets02PtReclust,_histFastJets02PtSubLeading,_histFastJets02PtLeading,_histFastJets02Pt, _histFastJets02Mult, _histFastJets02E, _histFastJets02Eta, _histFastJets02Rapidity, _histFastJets02Phi});
       normalize({_histFastJets04MultLam,_histFastJets04PtLam,_histFastJets04LhaLam,_histFastJets04WidthLam,_histFastJets04MassLam,_histFastJets04PtReclust,_histFastJets04PtSubLeading,_histFastJets04PtLeading,_histFastJets04Pt, _histFastJets04Mult, _histFastJets04E, _histFastJets04Eta, _histFastJets04Rapidity, _histFastJets04Phi});
