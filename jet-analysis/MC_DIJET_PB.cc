@@ -107,7 +107,7 @@ namespace Rivet {
       _histOthersThenGluonAndQuarkMulti = bookHisto1D("OthersThenGluonAndQuarkMulti", 10, 0, 10);
       _histPartonMulti = bookHisto1D("PartonMulti", 10, 0, 10);
 
-      _histPDGID = bookHisto1D("PDGID", 2000078, -1000039, 1000039);
+      _histPDGID = bookHisto1D("PDGID", 60, -30, 30);
 
 
 
@@ -305,7 +305,11 @@ namespace Rivet {
         }
         NumberOfPartons++;
         _histPartonFractionPt->fill(p.pT(), event.weight());
-        _histPDGID->fill(p.pdgId(), event.weight());
+        if (p.pdgId() == 9922212){
+            _histPDGID->fill(30, event.weight());
+        } else{
+            _histPDGID->fill(p.pdgId(), event.weight());
+        }
       }
 
       //if (NumberOfPartons != 0.0){
