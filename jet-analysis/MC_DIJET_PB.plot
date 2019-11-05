@@ -1,7 +1,39 @@
-# BEGIN PLOT /MC_DIJET_PB/PartonMulti$
-Title=Parton multiplicity
-XLabel=Multiplicity of Partons [-]
-YLabel=Events (normalized)
+# BEGIN PLOT /MC_DIJET_PB/GluonFractionPt$
+Title=Gluon fraction as a function of Pt
+XLabel=${p_{T}}$ [GeV]
+YLabel=Fraction of events (normalized)
+LogY=0
+LineColor=green
+# END PLOT
+
+# BEGIN PLOT /MC_DIJET_PB/QuarkFractionPt$
+Title=Quark fraction as a function of Pt
+XLabel=${p_{T}}$ [GeV]
+YLabel=Fraction of events (normalized)
+LogY=0
+LineColor=green
+# END PLOT
+
+# BEGIN PLOT /MC_DIJET_PB/GluonAndQuarkFractionPt$
+Title=GluonAndQuarkFractionPt fraction as a function of Pt
+XLabel=${p_{T}}$ [GeV]
+YLabel=Fraction of events (normalized)
+LogY=0
+LineColor=green
+# END PLOT
+
+# BEGIN PLOT /MC_DIJET_PB/OthersThenGluonAndQuarkFractionPt$
+Title=OthersThenGluonAndQuarkFractionPt fraction as a function of Pt
+XLabel=${p_{T}}$ [GeV]
+YLabel=Fraction of events (normalized)
+LogY=0
+LineColor=green
+# END PLOT
+
+# BEGIN PLOT /MC_DIJET_PB/PartonFractionPt$
+Title=Parton fraction as a function of Pt
+XLabel=${p_{T}}$ [GeV]
+YLabel=Fraction of events (normalized)
 LogY=0
 LineColor=green
 # END PLOT
@@ -14,10 +46,34 @@ LogY=0
 LineColor=green
 # END PLOT
 
-# BEGIN PLOT /MC_DIJET_PB/GluonFractionPt$
-Title=Gluon fraction as a function of sum of Pt of all partons in the event
-XLabel=${p_{T}}$ [GeV]
-YLabel=Fraction of events (normalized)
+# BEGIN PLOT /MC_DIJET_PB/QuarkMulti$
+Title=Quark multiplicity
+XLabel=Multiplicity of Quarks [-]
+YLabel=Events (normalized)
+LogY=0
+LineColor=green
+# END PLOT
+
+# BEGIN PLOT /MC_DIJET_PB/GluonAndQuarkMulti$
+Title=GluonAndQuark multiplicity
+XLabel=Multiplicity of GluonsAndQuarks [-]
+YLabel=Events (normalized)
+LogY=0
+LineColor=green
+# END PLOT
+
+# BEGIN PLOT /MC_DIJET_PB/OthersThenGluonAndQuarkMulti$
+Title=OthersThenGluonAndQuarkMulti multiplicity
+XLabel=Multiplicity of OthersThenGluonAndQuarkMulti [-]
+YLabel=Events (normalized)
+LogY=0
+LineColor=green
+# END PLOT
+
+# BEGIN PLOT /MC_DIJET_PB/PartonMulti
+Title=Parton multiplicity
+XLabel=Multiplicity of Partons [-]
+YLabel=Events (normalized)
 LogY=0
 LineColor=green
 # END PLOT

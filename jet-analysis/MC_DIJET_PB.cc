@@ -95,9 +95,19 @@ namespace Rivet {
       double Nbins = 250;
       double NbinsMulti = 50;
       double MaxMulti = 250;
-      _histGluonFractionPt = bookHisto1D("GluonFractionPt", 50, 0, 200);
+      _histGluonFractionPt = bookHisto1D("GluonFractionPt", 1500, 0, 1500);
+      _histQuarkFractionPt = bookHisto1D("QuarkFractionPt", 1500, 0, 1500);
+      _histGluonAndQuarkFractionPt = bookHisto1D("GluonAndQuarkFractionPt", 1500, 0, 1500);
+      _histOthersThenGluonAndQuarkFractionPt = bookHisto1D("OthersThenGluonAndQuarkFractionPt", 1500, 0, 1500);
+      _histPartonFractionPt = bookHisto1D("PartonFractionPt", 1500, 0, 1500);
+
       _histGluonMulti = bookHisto1D("GluonMulti", 10, 0, 10);
+      _histQuarkMulti = bookHisto1D("QuarkMulti", 10, 0, 10);
+      _histGluonAndQuarkMulti = bookHisto1D("GluonAndQuarkMulti", 10, 0, 10);
+      _histOthersThenGluonAndQuarkMulti = bookHisto1D("OthersThenGluonAndQuarkMulti", 10, 0, 10);
       _histPartonMulti = bookHisto1D("PartonMulti", 10, 0, 10);
+
+
 
       _histFastJets02PtSubLeading = bookHisto1D("FastJets02PtSubLeading", 50, 0, 200);
       _histFastJets02PtLeading = bookHisto1D("FastJets02PtLeading", 50, 0, 200);
@@ -268,26 +278,41 @@ namespace Rivet {
       vector<PseudoJet> particles;
       double Q = 0.0;
       int NumberOfGluons = 0;
+      int NumberOfQuarks = 0;
+      int NumberOfOthersThanGluonsAndQuars = 0;
+      int NumberOfGluonAndQuark = 0;
       int NumberOfPartons = 0;
-
       
       particles.reserve(fs.particles().size());
       foreach (const Particle &p, fs.particles()){
         particles.push_back(p.pseudojet());
-        Q += p.pT();
-        if (p.pdgId() == 21){
+        Q += p.pT();//tady dodelat !!!
+        if (p.pdgId() == 21) {
                   NumberOfGluons++;
-                  }
+                  _histGluonFractionPt->fill(p.pT(),event.weight());
+                  } else if (abs(p.pdgId()) < 7) {              
+                        NumberOfQuarks++;
+                        _histQuarkFractionPt->fill(p.pT(),event.weight());
+                        } else{
+                            NumberOfOthersThanGluonsAndQuars++;
+                            _histOthersThenGluonAndQuarkFractionPt->fill(p.pT(),event.weight());                      
+                            }
+        if ((p.pdgId() == 21) || (abs(p.pdgId()) < 7)){
+                NumberOfGluonAndQuark++;
+                _histGluonAndQuarkFractionPt->fill(p.pT(), event.weight());          
+        }
         NumberOfPartons++;
+        _histPartonFractionPt->fill(p.pT(), event.weight());
       }
 
-      if (NumberOfPartons != 0.0){
-        _histGluonFractionPt->fill(Q,event.weight()*NumberOfGluons/NumberOfPartons);
-      }
+      //if (NumberOfPartons != 0.0){
+      //  _histGluonFractionPt->fill(Q,event.weight()*NumberOfGluons/NumberOfPartons);
+      //}
       _histGluonMulti->fill(NumberOfGluons,event.weight());
+      _histQuarkMulti->fill(NumberOfQuarks,event.weight());
+      _histGluonAndQuarkMulti->fill(NumberOfGluonAndQuark,event.weight());
+      _histOthersThenGluonAndQuarkMulti->fill(NumberOfOthersThanGluonsAndQuars,event.weight());
       _histPartonMulti->fill(NumberOfPartons,event.weight());
-      
-      
 
       for (size_t i = 0; i < NumberOfRadiuses; ++i) {
       jetAr[i] = apply<FastJets>(event,KTRadius[i]).jetsByPt(PtCut*GeV);
@@ -381,7 +406,12 @@ namespace Rivet {
      }
 
     void finalize() {
-      normalize({_histGluonFractionPt, _histGluonMulti, _histPartonMulti});
+      divide(_histGluonFractionPt , _histPartonFractionPt);
+      divide(_histQuarkFractionPt , _histPartonFractionPt);
+      divide(_histGluonAndQuarkFractionPt , _histPartonFractionPt);
+      divide(_histOthersThenGluonAndQuarkFractionPt , _histPartonFractionPt);
+      divide(_histPartonFractionPt , _histPartonFractionPt);
+      normalize({_histGluonMulti, _histQuarkMulti, _histGluonAndQuarkMulti, _histOthersThenGluonAndQuarkMulti, _histPartonMulti});
       normalize({_histFastJets02MultLam,_histFastJets02PtLam,_histFastJets02LhaLam,_histFastJets02WidthLam,_histFastJets02MassLam,_histFastJets02PtReclust,_histFastJets02PtSubLeading,_histFastJets02PtLeading,_histFastJets02Pt, _histFastJets02Mult, _histFastJets02E, _histFastJets02Eta, _histFastJets02Rapidity, _histFastJets02Phi});
       normalize({_histFastJets04MultLam,_histFastJets04PtLam,_histFastJets04LhaLam,_histFastJets04WidthLam,_histFastJets04MassLam,_histFastJets04PtReclust,_histFastJets04PtSubLeading,_histFastJets04PtLeading,_histFastJets04Pt, _histFastJets04Mult, _histFastJets04E, _histFastJets04Eta, _histFastJets04Rapidity, _histFastJets04Phi});
       normalize({_histFastJets06MultLam,_histFastJets06PtLam,_histFastJets06LhaLam,_histFastJets06WidthLam,_histFastJets06MassLam,_histFastJets06PtReclust,_histFastJets06PtSubLeading,_histFastJets06PtLeading,_histFastJets06Pt, _histFastJets06Mult, _histFastJets06E, _histFastJets06Eta, _histFastJets06Rapidity, _histFastJets06Phi});
@@ -392,7 +422,9 @@ namespace Rivet {
 
   private:
     Recluster ca_wta_recluster;
-    Histo1DPtr _histGluonFractionPt, _histGluonMulti, _histPartonMulti;
+
+    Histo1DPtr _histGluonFractionPt, _histQuarkFractionPt, _histGluonAndQuarkFractionPt, _histOthersThenGluonAndQuarkFractionPt, _histPartonFractionPt;
+    Histo1DPtr _histGluonMulti, _histQuarkMulti, _histGluonAndQuarkMulti, _histOthersThenGluonAndQuarkMulti, _histPartonMulti;
     Histo1DPtr _histFastJets02MultLam, _histFastJets02PtLam,_histFastJets02LhaLam,_histFastJets02WidthLam,_histFastJets02MassLam,_histFastJets02PtReclust,_histFastJets02PtSubLeading,_histFastJets02PtLeading,_histFastJets02Pt, _histFastJets02Mult, _histFastJets02E, _histFastJets02Eta, _histFastJets02Rapidity, _histFastJets02Phi;
     Histo1DPtr _histFastJets04MultLam, _histFastJets04PtLam,_histFastJets04LhaLam,_histFastJets04WidthLam,_histFastJets04MassLam,_histFastJets04PtReclust,_histFastJets04PtSubLeading,_histFastJets04PtLeading,_histFastJets04Pt, _histFastJets04Mult, _histFastJets04E, _histFastJets04Eta, _histFastJets04Rapidity, _histFastJets04Phi;
     Histo1DPtr _histFastJets06MultLam, _histFastJets06PtLam,_histFastJets06LhaLam,_histFastJets06WidthLam,_histFastJets06MassLam,_histFastJets06PtReclust,_histFastJets06PtSubLeading,_histFastJets06PtLeading,_histFastJets06Pt, _histFastJets06Mult, _histFastJets06E, _histFastJets06Eta, _histFastJets06Rapidity, _histFastJets06Phi;
