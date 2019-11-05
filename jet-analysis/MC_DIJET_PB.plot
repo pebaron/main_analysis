@@ -1,3 +1,11 @@
+# BEGIN PLOT /MC_DIJET_PB/PDGID$
+Title=PDGID
+XLabel=different Partons
+YLabel=Events (normalized)
+LogY=0
+LineColor=green
+# END PLOT
+
 # BEGIN PLOT /MC_DIJET_PB/GluonFractionPt$
 Title=Gluon fraction as a function of Pt
 XLabel=${p_{T}}$ [GeV]

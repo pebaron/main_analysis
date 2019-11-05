@@ -107,6 +107,8 @@ namespace Rivet {
       _histOthersThenGluonAndQuarkMulti = bookHisto1D("OthersThenGluonAndQuarkMulti", 10, 0, 10);
       _histPartonMulti = bookHisto1D("PartonMulti", 10, 0, 10);
 
+      _histPDGID = bookHisto1D("PDGID", 2000078, -1000039, 1000039);
+
 
 
       _histFastJets02PtSubLeading = bookHisto1D("FastJets02PtSubLeading", 50, 0, 200);
@@ -303,6 +305,7 @@ namespace Rivet {
         }
         NumberOfPartons++;
         _histPartonFractionPt->fill(p.pT(), event.weight());
+        _histPDGID->fill(p.pdgId(), event.weight());
       }
 
       //if (NumberOfPartons != 0.0){
@@ -411,6 +414,7 @@ namespace Rivet {
       //divide(_histGluonAndQuarkFractionPt , _histPartonFractionPt);
       //divide(_histOthersThenGluonAndQuarkFractionPt , _histPartonFractionPt);
       //divide(_histPartonFractionPt , _histPartonFractionPt);
+      normalize({_histPDGID});
       normalize({_histGluonMulti, _histQuarkMulti, _histGluonAndQuarkMulti, _histOthersThenGluonAndQuarkMulti, _histPartonMulti});
       normalize({_histFastJets02MultLam,_histFastJets02PtLam,_histFastJets02LhaLam,_histFastJets02WidthLam,_histFastJets02MassLam,_histFastJets02PtReclust,_histFastJets02PtSubLeading,_histFastJets02PtLeading,_histFastJets02Pt, _histFastJets02Mult, _histFastJets02E, _histFastJets02Eta, _histFastJets02Rapidity, _histFastJets02Phi});
       normalize({_histFastJets04MultLam,_histFastJets04PtLam,_histFastJets04LhaLam,_histFastJets04WidthLam,_histFastJets04MassLam,_histFastJets04PtReclust,_histFastJets04PtSubLeading,_histFastJets04PtLeading,_histFastJets04Pt, _histFastJets04Mult, _histFastJets04E, _histFastJets04Eta, _histFastJets04Rapidity, _histFastJets04Phi});
@@ -423,6 +427,7 @@ namespace Rivet {
   private:
     Recluster ca_wta_recluster;
 
+    Histo1DPtr _histPDGID;
     Histo1DPtr _histGluonFractionPt, _histQuarkFractionPt, _histGluonAndQuarkFractionPt, _histOthersThenGluonAndQuarkFractionPt, _histPartonFractionPt;
     Histo1DPtr _histGluonMulti, _histQuarkMulti, _histGluonAndQuarkMulti, _histOthersThenGluonAndQuarkMulti, _histPartonMulti;
     Histo1DPtr _histFastJets02MultLam, _histFastJets02PtLam,_histFastJets02LhaLam,_histFastJets02WidthLam,_histFastJets02MassLam,_histFastJets02PtReclust,_histFastJets02PtSubLeading,_histFastJets02PtLeading,_histFastJets02Pt, _histFastJets02Mult, _histFastJets02E, _histFastJets02Eta, _histFastJets02Rapidity, _histFastJets02Phi;
