@@ -95,11 +95,11 @@ namespace Rivet {
       double Nbins = 250;
       double NbinsMulti = 50;
       double MaxMulti = 250;
-      _histGluonFractionPt = bookHisto1D("GluonFractionPt", 1500, 0, 1500);
-      _histQuarkFractionPt = bookHisto1D("QuarkFractionPt", 1500, 0, 1500);
-      _histGluonAndQuarkFractionPt = bookHisto1D("GluonAndQuarkFractionPt", 1500, 0, 1500);
-      _histOthersThenGluonAndQuarkFractionPt = bookHisto1D("OthersThenGluonAndQuarkFractionPt", 1500, 0, 1500);
-      _histPartonFractionPt = bookHisto1D("PartonFractionPt", 1500, 0, 1500);
+      _histGluonFractionPt = bookHisto1D("GluonFractionPt", 200, 0, 200);
+      _histQuarkFractionPt = bookHisto1D("QuarkFractionPt", 200, 0, 200);
+      _histGluonAndQuarkFractionPt = bookHisto1D("GluonAndQuarkFractionPt", 200, 0, 200);
+      _histOthersThenGluonAndQuarkFractionPt = bookHisto1D("OthersThenGluonAndQuarkFractionPt", 200, 0, 200);
+      _histPartonFractionPt = bookHisto1D("PartonFractionPt", 200, 0, 200);
 
       _histGluonMulti = bookHisto1D("GluonMulti", 10, 0, 10);
       _histQuarkMulti = bookHisto1D("QuarkMulti", 10, 0, 10);
