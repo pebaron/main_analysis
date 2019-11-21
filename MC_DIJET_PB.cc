@@ -25,6 +25,8 @@
 #include "fastjet/JetDefinition.hh"
 #include "fastjet/ClusterSequence.hh"
 #include "fastjet/tools/Recluster.hh"
+#include "ROOT.h"
+#include "TGraph2D.h"
 //#include "fastjet/contrib/ModifiedMassDropTagger.hh"
 
 #include <fastjet/config.h>
