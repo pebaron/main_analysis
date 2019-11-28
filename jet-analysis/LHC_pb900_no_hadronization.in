@@ -92,7 +92,8 @@ insert SubProcess:MatrixElements[0] MEQCD2to2
 # insert SubProcess:MatrixElements[0] MEHiggs
 # insert SubProcess:MatrixElements[0] MEHiggsJet
 # set MEHiggsJet:Process qqbar
-# set /Herwig/Cuts/JetKtCut:MinKT 0.0*GeV
+set /Herwig/Cuts/JetKtCut:MinKT 0.0*GeV
+# Petr had added line above, to make sure
 #
 # higgs+jet
 # insert SubProcess:MatrixElements[0] MEHiggsJet

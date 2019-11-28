@@ -10,6 +10,7 @@ for s in 61972970 23354883 88615218 70896900 18669684 71917516 25202807 62914023
 echo "Reading file == Herwig read LHC_pb13000.in with seed $s.";
 Herwig read LHC_pb13000_no_hadronization.in;
 mv LHC.run LHC_${s}.run;
+mv other_pdgid.txt ${s}_13000_other_pdgid.txt
 echo "Running Herwig == Herwig run LHC_${s}.run -N ${c} -s ${s}";
 Herwig run LHC_${s}.run -N $c -s $s;
 done;

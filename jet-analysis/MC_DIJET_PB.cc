@@ -25,6 +25,9 @@
 #include "fastjet/JetDefinition.hh"
 #include "fastjet/ClusterSequence.hh"
 #include "fastjet/tools/Recluster.hh"
+#include <iostream>
+#include <fstream>
+using namespace std;
 //#include "fastjet/contrib/ModifiedMassDropTagger.hh"
 //#include "/home/petr/NewRoot/root/include/TRandom.h"
 //#include "/home/petr/NewRoot/root/include/Math/TRandomEngine.h"
@@ -172,7 +175,8 @@ namespace Rivet {
         nRADII(5),
         nQs(5),
         DELTA_RADII(0.2),
-        PARTICLE_RAPMAX(2.5),
+        //PARTICLE_RAPMAX(2.5),
+        PARTICLE_RAPMAX(1e10),
         JET_RAPMAX(1.5)
     {
       // avg of the two hardest has that minimum
@@ -186,6 +190,7 @@ namespace Rivet {
     void init() {
 
       FinalState fs(-PARTICLE_RAPMAX, PARTICLE_RAPMAX, 0.0*GeV);
+      FinalState fs2(-PARTICLE_RAPMAX, PARTICLE_RAPMAX, 0.0*GeV);
       VetoedFinalState jet_input(fs);
       jet_input.vetoNeutrinos();
       addProjection(jet_input, "JET_INPUT");
@@ -208,11 +213,11 @@ namespace Rivet {
       double Nbins = 250;
       double NbinsMulti = 50;
       double MaxMulti = 250;
-      _histGluonFractionPt = bookHisto1D("GluonFractionPt", 130, 20, 150);
-      _histQuarkFractionPt = bookHisto1D("QuarkFractionPt", 130, 20, 150);
-      _histGluonAndQuarkFractionPt = bookHisto1D("GluonAndQuarkFractionPt", 130, 20, 150);
-      _histOthersThenGluonAndQuarkFractionPt = bookHisto1D("OthersThenGluonAndQuarkFractionPt", 130, 20, 150);
-      _histPartonFractionPt = bookHisto1D("PartonFractionPt", 130, 20, 150);
+      _histGluonFractionPt = bookHisto1D("GluonFractionPt", 40, 0, 160);
+      _histQuarkFractionPt = bookHisto1D("QuarkFractionPt", 40, 0, 160);
+      _histGluonAndQuarkFractionPt = bookHisto1D("GluonAndQuarkFractionPt", 40, 0, 160);
+      _histOthersThenGluonAndQuarkFractionPt = bookHisto1D("OthersThenGluonAndQuarkFractionPt", 40, 0, 160);
+      _histPartonFractionPt = bookHisto1D("PartonFractionPt", 40, 0, 160);
 
       _histGluonMulti = bookHisto1D("GluonMulti", 10, 0, 10);
       _histQuarkMulti = bookHisto1D("QuarkMulti", 10, 0, 10);
@@ -220,7 +225,7 @@ namespace Rivet {
       _histOthersThenGluonAndQuarkMulti = bookHisto1D("OthersThenGluonAndQuarkMulti", 10, 0, 10);
       _histPartonMulti = bookHisto1D("PartonMulti", 10, 0, 10);
 
-      _histPDGID = bookHisto1D("PDGID", 60, -30, 30);
+      _histPDGID = bookHisto1D("PDGID", 180, -90, 90);
 
 
 
@@ -379,11 +384,15 @@ namespace Rivet {
       ArrayOfHist[4][11] = _histFastJets10LhaLam;
       ArrayOfHist[4][12] = _histFastJets10WidthLam;
       ArrayOfHist[4][13] = _histFastJets10MassLam;
-      
-
     }
 
+    ofstream myfile;
+    int Counter = 1;
+
     void analyze(const Event& event) {
+      if (Counter == 1){
+        myfile.open ("other_pdgid.txt");
+      }
       double PtCut = 0.0;
       const int NumberOfRadiuses = 5;
       const double radius[NumberOfRadiuses] = {0.2,0.4,0.6,0.8,1.0};
@@ -397,7 +406,6 @@ namespace Rivet {
       int NumberOfOthersThanGluonsAndQuars = 0;
       int NumberOfGluonAndQuark = 0;
       int NumberOfPartons = 0;
-      
       particles.reserve(fs.particles().size());
       foreach (const Particle &p, fs.particles()){
         particles.push_back(p.pseudojet());
@@ -410,6 +418,9 @@ namespace Rivet {
                         _histQuarkFractionPt->fill(p.pT(),event.weight());
                         } else{
                             NumberOfOthersThanGluonsAndQuars++;
+                            if (p.pdgId() != 82){
+                              myfile << p.pdgId() <<"\n";
+                              }
                             _histOthersThenGluonAndQuarkFractionPt->fill(p.pT(),event.weight());                      
                             }
         if ((p.pdgId() == 21) || (abs(p.pdgId()) < 7)){
@@ -424,6 +435,7 @@ namespace Rivet {
             _histPDGID->fill(p.pdgId(), event.weight());
         }
       }
+
 
       //if (NumberOfPartons != 0.0){
       //  _histGluonFractionPt->fill(Q,event.weight()*NumberOfGluons/NumberOfPartons);
@@ -523,6 +535,10 @@ namespace Rivet {
         k++;
         }
         }
+     if (Counter == 100000){
+       myfile.close();
+     }
+     Counter++;
      }
 
     void finalize() {
