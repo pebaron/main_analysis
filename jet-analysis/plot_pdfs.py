@@ -34,7 +34,7 @@ print qs
 gluon_xfs = np.empty([len(xs), len(qs)])
 for ix, x in enumerate(xs):
     for iq, q in enumerate(qs):
-        gluon_xfs[ix,iq] = p.xfxQ(particle, x, q)
+        gluon_xfs[ix,iq] = p.xfxQ(particle, x, q) # I give q, but it returns q2,  https://lhapdf.hepforge.org/classLHAPDF_1_1PDF.html
 
 #qs = np.log10(qs)
 X, Y = np.meshgrid(xs, qs)

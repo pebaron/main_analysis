@@ -27,6 +27,17 @@ set EventGenerator:EventHandler:DecayHandler NULL
 set EventGenerator:EventHandler:HadronizationHandler NULL
 set EventGenerator:EventHandler:CascadeHandler NULL
 
+########################
+## Petr Baron - different pdf's , CT14lo, NNPDF31_lo_as_0118, MMHT2014lo68cl - default by Herwig
+########################
+cd /Herwig/Partons
+create ThePEG::LHAPDF PDFSet ThePEGLHAPDF.so
+set PDFSet:PDFName MMHT2014lo68cl
+set PDFSet:RemnantHandler HadronRemnants
+set /Herwig/Particles/p+:PDF PDFSet
+set /Herwig/Particles/pbar-:PDF PDFSet
+cd /
+
 ##################################################
 # Matrix Elements for hadron-hadron collisions 
 # (by default only gamma/Z switched on)
@@ -92,7 +103,7 @@ insert SubProcess:MatrixElements[0] MEQCD2to2
 # insert SubProcess:MatrixElements[0] MEHiggs
 # insert SubProcess:MatrixElements[0] MEHiggsJet
 # set MEHiggsJet:Process qqbar
-set /Herwig/Cuts/JetKtCut:MinKT 0.0*GeV
+set /Herwig/Cuts/JetKtCut:MinKT 25.0*GeV
 # Petr had added line above, to make sure
 #
 # higgs+jet
