@@ -150,6 +150,7 @@ cd /Herwig/Generators
 ##################################################
 read snippets/Rivet.in
 insert /Herwig/Analysis/Rivet:Analyses 0 MC_DIJET_PB
+set /Herwig/Analysis/Basics:CheckQuark No
 #read snippets/HepMC.in
 #set /Herwig/Analysis/HepMC:PrintEvent NNN
 

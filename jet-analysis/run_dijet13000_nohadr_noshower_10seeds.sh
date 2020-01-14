@@ -14,6 +14,5 @@ mv LHC.run ./${s}_13000/LHC_${s}_13000.run;
 mv other_pdgid.txt ${s}_13000_other_pdgid.txt
 echo "Running Herwig == Herwig run LHC_${s}.run -N ${c} -s ${s}";
 Herwig run ./${s}_13000/LHC_${s}_13000.run -N $c -s $s;
-rm *.log
 done;
 
